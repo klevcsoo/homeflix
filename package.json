@@ -1,0 +1,12 @@
+{
+  "name": "homeflix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "sh deploy.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

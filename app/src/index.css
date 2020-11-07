@@ -1,0 +1,66 @@
+:root {
+  --colour-bg: #e8eef4;
+  --colour-fg: #ffffff;
+  --colour-text: #2c2c2e;
+  --colour-warn: #f53f4b;
+  --colour-primary: #34c759;
+
+  --shadow-fg: none;
+  --shadow-primary: none;
+
+  --value-border-radius: 10px;
+}
+@media(prefers-color-scheme: dark) {
+  :root {
+    --colour-bg: #222222;
+    --colour-fg: #000000;
+    --colour-text: #ffffff;
+    --colour-primary: #30d158;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  transition: 100ms ease-in-out all;
+}
+*:focus {
+  outline: none;
+}
+::-webkit-scrollbar {
+  width: 0; display: none; visibility: collapse;
+}
+
+body {
+  margin: 0;
+  font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: hidden;
+
+  background: var(--colour-bg);
+  color: var(--colour-text);
+  text-align: center;
+  font-size: 18px;
+}
+
+.acrylic-transparent {
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  background: rgba(255, 255, 255, 0.3);
+}
+@supports not (backdrop-filter: none) {
+  .acrylic-transparent { background: rgba(255, 255, 255, 0.8); } 
+}
+@media(prefers-color-scheme: dark) {
+  .acrylic-transparent {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+  }
+  @supports not (backdrop-filter: none) {
+    .acrylic-transparent { background: rgba(0, 0, 0, 0.8); }
+  }
+}

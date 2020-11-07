@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/main.js",
+  "bin": "lib/main.js",
+  "scripts": {
+    "start": "tsc && NODE_ENV=development node .",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cors": "^2.8.8",
+    "@types/ip": "^1.1.0",
+    "@types/socket.io": "^2.1.11",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "ip": "^1.1.5",
+    "movie-info": "^2.0.5",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {}
+}
