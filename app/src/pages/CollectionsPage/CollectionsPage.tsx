@@ -11,6 +11,7 @@ const CollectionsPage = () => {
   const [ collection, setCollection ] = useState('');
 
   const ac = () => {
+    if (!collection) return;
     addCollection(collection);
     setCollection('');
   };
