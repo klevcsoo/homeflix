@@ -31,7 +31,7 @@ const MediaDetailsPage = () => {
         <p><b>Duration: </b>{ formatTime(media.duration) }</p>
         <p><b>Rating: </b> { media.metadata.rating } / 10</p>
         <p><b>Release date: </b> { new Date(media.metadata.releaseDate).toLocaleDateString() }</p>
-        <AppButton type="primary" text="Add to collection" onClick={ () => { } } />
+        <AppButton type="secondary" text="Add to collection" onClick={ () => { } } />
       </div>
       <MediaDetailsPlayer { ...media } />
     </React.Fragment>
