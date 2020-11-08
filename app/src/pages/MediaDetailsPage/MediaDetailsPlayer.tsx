@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { updateProgressOnMedia } from '../../utils/comms';
-import { formatTime } from '../../utils/functions';
 import { IFilmInfo } from '../../utils/interfaces';
 
 const MediaDetailsPlayer = (props: IFilmInfo) => {
   const progress = useRef(props.progress);
   const setProgress = useCallback(() => {
-    updateProgressOnMedia(props.id, progress.current).then(() => {
-      console.log(`Progress on ${ props.title } is set to ${ formatTime(progress.current) }`);
-    });
+    updateProgressOnMedia(props.id, progress.current);
   }, [ progress, props ]);
 
   useEffect(() => {
