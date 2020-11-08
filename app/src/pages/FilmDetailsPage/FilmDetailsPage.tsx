@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './MediaDetails.css';
+import './FilmDetailsPage.css';
 import { useParams } from 'react-router-dom';
 import FAC from 'fast-average-color';
 import AppButton from '../../components/AppButton/AppButton';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import FilmDetailsPlayer from './FilmDetailsPlayer';
 import { useMediaDetails } from '../../utils/comms';
-import MediaDetailsPlayer from './MediaDetailsPlayer';
 import { formatTime } from '../../utils/functions';
 
 const MediaDetailsPage = () => {
@@ -33,7 +33,7 @@ const MediaDetailsPage = () => {
         <p><b>Release date: </b> { new Date(media.metadata.releaseDate).toLocaleDateString() }</p>
         <AppButton type="secondary" text="Add to collection" onClick={ () => { } } />
       </div>
-      <MediaDetailsPlayer { ...media } />
+      <FilmDetailsPlayer { ...media } />
     </React.Fragment>
   );
 };

@@ -1,7 +1,7 @@
 export const routes = {
   HOME: '/',
   LIBRARY: '/library',
-  MEDIA_DETAILS: '/library/:media_id',
+  FILM_DETAILS: '/library/film/:media_id',
   SEARCH: '/search',
   COLLECTIONS: '/collections',
   SETTINGS: '/settings'

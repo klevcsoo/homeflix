@@ -10,7 +10,7 @@ const AppMediaCard = (props: IFilmInfo & { grayOutWatched?: boolean; }) => {
   return (
     <div className={ `app-media-card${ props.grayOutWatched && props.progress === props.duration ? ' grayed-out' : '' }` }
       onClick={ () => {
-        setTimeout(() => history.push(routes.MEDIA_DETAILS.replace(':media_id', props.id)), 200);
+        setTimeout(() => history.push(routes.FILM_DETAILS.replace(':media_id', props.id)), 200);
       } }>
       {/* Add fallback image to img element with the onError attribute*/ }
       <img src={ props.metadata.poster } alt="" />
