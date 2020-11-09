@@ -4,7 +4,8 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { address as getLocalIP } from 'ip';
 import { serverConfig } from './constants';
-import { addMediaFileToLibrary, generateCollectionID, generateMediaID, getFilmInfo, getLibrary, getMediaFiles, printRequestInfo, updateLibrary } from './utils';
+import { generateCollectionID, getFilmInfo, getLibrary, printRequestInfo, setLibrary } from './utils';
+import { addMediaFileToLibrary, getMediaFiles } from './media-dir-handler';
 
 const app = express();
 const httpServer = createServer(app);
@@ -66,7 +67,7 @@ app.post('/media/:media_id', (req, res) => {
   if (!p && p !== 0) { res.status(406).send('Progress format incorrect'); return; }
 
   const margin = 5; // percent
-  updateLibrary((lib) => {
+  setLibrary((lib) => {
     const film = lib.films[ id ];
     if (p < film.duration * (margin / 100)) film.progress = 0;
     else if (p > film.duration * ((100 - margin) / 100)) film.progress = film.duration;
@@ -94,7 +95,7 @@ app.get('/collections', (req, res) => {
 // Add new collection
 app.post('/collections', (req, res) => {
   printRequestInfo(req);
-  updateLibrary((lib) => {
+  setLibrary((lib) => {
     lib.collections[ generateCollectionID() ] = {
       name: req.query.name as string,
       films: []
@@ -115,7 +116,7 @@ app.post('/collections/:collection_id', (req, res) => {
   } else if (!mid) {
     res.status(406).send('Media ID missing');
   } else {
-    updateLibrary((lib) => {
+    setLibrary((lib) => {
       lib.collections[ cid ].films.push(mid as string);
       return lib;
     });
