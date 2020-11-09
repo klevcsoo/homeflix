@@ -24,7 +24,9 @@ const LibraryPage = () => {
         </React.Fragment>
       ) }
       <div className="library-all-media">
-        { Object.keys(lib.films).map((id, ix) => (
+        { Object.keys(lib.films).sort((a, b) => {
+          return lib.films[ a ].title.localeCompare(lib.films[ b ].title);
+        }).map((id, ix) => (
           <AppMediaCard { ...lib.films[ id ] } id={ id } key={ ix } grayOutWatched />
         )) }
       </div>
