@@ -17,7 +17,8 @@ const MediaDetailsPlayer = (props: IFilmInfo) => {
       progress.current = Math.round(event.currentTarget.currentTime);
     } } onLoadedMetadata={ (event) => {
       event.currentTarget.currentTime = progress.current;
-    } } onPause={ () => setProgress() } poster={ props.metadata.backdrop } preload="none">
+    } } onPause={ () => setProgress() } poster={ props.metadata.backdrop }
+      preload="none" controlsList="nodownload">
       <source src={ `http://${ window.location.hostname }:7800/media/${ props.id }` } type="video/mp4" />
       Your browser does not support native video playback.
     </video>
