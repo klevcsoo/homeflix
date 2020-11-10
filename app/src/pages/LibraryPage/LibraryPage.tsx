@@ -1,8 +1,10 @@
 import React from 'react';
 import './LibraryPage.css';
-import AppMediaCard from '../../components/AppMediaCard/AppMediaCard';
+import AppFilmCard from '../../components/AppMediaCard/AppFilmCard';
 import { useLibrary } from '../../utils/comms';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { ILibrary } from '../../utils/interfaces';
+import AppShowCard from '../../components/AppMediaCard/AppShowCard';
 
 const LibraryPage = () => {
   const lib = useLibrary();
@@ -18,20 +20,29 @@ const LibraryPage = () => {
           <h2 className="library-label">Continue watching</h2>
           <div className="library-continue-watching">
             { continueWatching?.map((id, ix) => (
-              <AppMediaCard { ...lib.films[ id ] } id={ id } key={ ix } />
+              <AppFilmCard { ...lib.films[ id ] } id={ id } key={ ix } />
             )) }
           </div>
         </React.Fragment>
       ) }
       <div className="library-all-media">
-        { Object.keys(lib.films).sort((a, b) => {
-          return lib.films[ a ].title.localeCompare(lib.films[ b ].title);
-        }).map((id, ix) => (
-          <AppMediaCard { ...lib.films[ id ] } id={ id } key={ ix } grayOutWatched />
-        )) }
+        { [ ...Object.keys(lib.films), ...Object.keys(lib.shows) ].sort((a, b) => {
+          return fromLibrary(lib, a).title.localeCompare(fromLibrary(lib, b).title);
+        }).map((id, ix) => {
+          if (isFilm(lib, id)) return <AppFilmCard { ...lib.films[ id ] } id={ id } key={ ix } grayOutWatched />;
+          else return <AppShowCard { ...lib.shows[ id ] } id={ id } key={ ix } grayOutWatched />;
+        }) }
       </div>
     </div>
   );
+};
+
+const fromLibrary = (lib: ILibrary, id: string) => {
+  return !!lib.films[ id ] ? lib.films[ id ] : lib.shows[ id ];
+};
+
+const isFilm = (lib: ILibrary, id: string) => {
+  return !!lib.films[ id ];
 };
 
 export default LibraryPage;

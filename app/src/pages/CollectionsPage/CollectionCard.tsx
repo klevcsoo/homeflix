@@ -1,5 +1,5 @@
 import React from 'react';
-import AppMediaCard from '../../components/AppMediaCard/AppMediaCard';
+import AppFilmCard from '../../components/AppMediaCard/AppFilmCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useLibrary } from '../../utils/comms';
 
@@ -14,7 +14,7 @@ const CollectionCard = (props: {
       <h2>{ collection.name }</h2>
       <div>
         { collection.films.map((id, ix) => (
-          <AppMediaCard { ...lib.films[ id ] } id={ id } key={ ix } grayOutWatched />
+          <AppFilmCard { ...lib.films[ id ] } id={ id } key={ ix } grayOutWatched />
         )) }
       </div>
     </div>

@@ -4,7 +4,7 @@ import { IFilmInfo } from '../../utils/interfaces';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../utils/constants';
 
-const AppMediaCard = (props: IFilmInfo & { grayOutWatched?: boolean; }) => {
+const AppFilmCard = (props: IFilmInfo & { grayOutWatched?: boolean; }) => {
   const history = useHistory();
 
   return (
@@ -27,4 +27,4 @@ const AppMediaCard = (props: IFilmInfo & { grayOutWatched?: boolean; }) => {
   );
 };
 
-export default AppMediaCard;
+export default AppFilmCard;
