@@ -17,3 +17,5 @@ export const serverConfig: IServerConfig = fs.existsSync(configPath) ?
     publicDirPath: DEF_PUBLIC_DIR,
     port: 7800
   };
+
+export const fanartKey = '54866c29d8011d283a87331372c86d06';

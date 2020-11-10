@@ -5,7 +5,7 @@ import { createServer } from 'http';
 import { address as getLocalIP } from 'ip';
 import { serverConfig } from './constants';
 import { generateCollectionID, getFilmInfo, getLibrary, printRequestInfo, setLibrary } from './utils';
-import { addMediaFileToLibrary, getMediaFiles } from './media-dir-handler';
+import synchroniseMediaDir, { addFilmToLibrary, getMediaFiles } from './sync-media';
 
 const app = express();
 const httpServer = createServer(app);
@@ -22,31 +22,11 @@ app.get('/media', (req, res) => {
 
 // Refresh the media library, by syncing
 // database with file system
-app.get('/sync-library', async (req, res) => {
+app.get('/sync-library', (req, res) => {
   printRequestInfo(req);
-  const mp4s = getMediaFiles();
-  const lib = getLibrary();
-
-  for (let i = 0; i < mp4s.length; i++) {
-    const [ absolutePath, filename ] = mp4s[ i ];
-
-    let found = false;
-    Object.keys(lib.films).forEach((id) => {
-      if (lib.films[ id ].playablePath === absolutePath) found = true;
-    });
-
-    try {
-      if (!found) await addMediaFileToLibrary(absolutePath, filename).then((title) => {
-        console.log(`Added ${ title } to the database`);
-      });
-    } catch (e) {
-      console.error(e);
-      res.sendStatus(501);
-      return;
-    }
-  }
-
-  res.sendStatus(200);
+  synchroniseMediaDir().then(() => {
+    res.sendStatus(200);
+  }).catch((err) => res.status(501).send(err));
 });
 
 // Get specific film from the library

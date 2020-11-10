@@ -14,12 +14,17 @@
   "dependencies": {
     "@types/cors": "^2.8.8",
     "@types/ip": "^1.1.0",
+    "@types/jsdom": "^16.2.5",
     "@types/socket.io": "^2.1.11",
+    "@types/xml2js": "^0.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "got": "^11.8.0",
     "ip": "^1.1.5",
+    "jsdom": "^16.4.0",
     "movie-info": "^2.0.5",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {}
 }

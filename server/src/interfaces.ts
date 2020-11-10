@@ -17,8 +17,19 @@ export interface IFilmInfo {
   collection?: string;
 }
 
+export interface IShowInfo {
+  title: string;
+  metadata: ITitleMetadata;
+  seasons: {
+    playablePath: string;
+    progress: number;
+    duration: number;
+  }[][];
+}
+
 export interface ILibrary {
   films: { [ id: string ]: IFilmInfo; };
+  shows: { [ id: string ]: IShowInfo; };
   collections: {
     [ id: string ]: {
       name: string,
