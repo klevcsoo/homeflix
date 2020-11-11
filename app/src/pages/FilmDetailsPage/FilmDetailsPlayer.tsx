@@ -13,7 +13,7 @@ const MediaDetailsPlayer = (props: IFilmInfo) => {
   }, [ props, setProgress ]);
 
   return (
-    <video className="media-details-player" controls onTimeUpdate={ (event) => {
+    <video className="film-details-player" controls onTimeUpdate={ (event) => {
       progress.current = Math.round(event.currentTarget.currentTime);
     } } onLoadedMetadata={ (event) => {
       event.currentTarget.currentTime = progress.current;
