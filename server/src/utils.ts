@@ -47,19 +47,3 @@ export function setLibrary(updater: (lib: ILibrary) => ILibrary) {
   const newLib = updater(getLibrary());
   fs.writeFileSync(serverConfig.databasePath, JSON.stringify(newLib));
 }
-
-/**
- * Checks if the given media id is present in the library
- * @param id media ID
- */
-export function existsInLibrary(id: string) {
-  return !!getLibrary().films[ id ] ? true : false;
-}
-
-/**
- * Get info about a given media
- * @param id media ID
- */
-export function getFilmInfo(id: string) {
-  return getLibrary().films[ id ];
-}

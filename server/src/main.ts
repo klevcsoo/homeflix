@@ -4,7 +4,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { address as getLocalIP } from 'ip';
 import { serverConfig } from './constants';
-import { generateCollectionID, getFilmInfo, getLibrary, printRequestInfo, setLibrary } from './utils';
+import { generateCollectionID, getLibrary, printRequestInfo, setLibrary } from './utils';
 import synchroniseMediaDir, { addFilmToLibrary, getMediaFiles } from './sync-media';
 
 const app = express();
@@ -32,12 +32,26 @@ app.get('/sync-library', (req, res) => {
 // Get specific film from the library
 app.get('/media/:media_id', (req, res) => {
   printRequestInfo(req);
-  const info = getFilmInfo(req.params.media_id as string);
+  const info = getLibrary().films[ req.params.media_id as string ];
   if (!info) res.status(404).send('Media not found');
   else res.status(200).sendFile(info.playablePath);
 });
 
-// Update the progress on a specific media
+// Get specific show from the library
+app.get('/media/:media_id/:season/:episode', (req, res) => {
+  printRequestInfo(req);
+  const s = parseInt(req.params.season);
+  const e = parseInt(req.params.episode);
+  if (!s || !e) res.status(406).send('Invalid season or episode format');
+  else {
+    const info = getLibrary().shows[ req.params.media_id as string ];
+    if (!info) res.status(404).send('Media not found');
+    else res.status(200).sendFile(info.seasons[ s - 1 ][ e - 1 ].playablePath);
+  }
+
+});
+
+// Update the progress on a specific film
 app.post('/media/:media_id', (req, res) => {
   printRequestInfo(req);
   const id = req.params.media_id;
@@ -46,7 +60,7 @@ app.post('/media/:media_id', (req, res) => {
   if (!getLibrary().films[ id ]) { res.status(404).send('Media not found'); return; }
   if (!p && p !== 0) { res.status(406).send('Progress format incorrect'); return; }
 
-  const margin = 5; // percent
+  const margin = 10; // percent
   setLibrary((lib) => {
     const film = lib.films[ id ];
     if (p < film.duration * (margin / 100)) film.progress = 0;
@@ -57,11 +71,34 @@ app.post('/media/:media_id', (req, res) => {
   res.sendStatus(200);
 });
 
+app.post('/media/:media_id/:season:/:episode', (req, res) => {
+  printRequestInfo(req);
+  const id = req.params.media_id;
+  const s = parseInt(req.params.season);
+  const e = parseInt(req.params.episode);
+  if (!s || !e) { res.status(406).send('Invalid season or episode format'); return; }
+
+  const p = parseInt(req.query.progress as string);
+  if (!getLibrary().shows[ id ]) { res.status(404).send('Media not found'); return; }
+  if (!p && p !== 0) { res.status(406).send('Progress format incorrect'); return; }
+
+  const margin = 10; // percent
+  setLibrary((lib) => {
+    const ep = lib.shows[ id ].seasons[ s - 1 ][ e - 1 ];
+    if (p < ep.duration * (margin / 100)) ep.progress = 0;
+    else if (p > ep.duration * ((100 - margin) / 100)) ep.progress = ep.duration;
+    else ep.progress = p;
+    return lib;
+  });
+  res.sendStatus(200);
+});
+
 // Get information about a specific media
 app.get('/media/:media_id/info', (req, res) => {
   printRequestInfo(req);
   const id = req.params.media_id as string;
-  const info = getFilmInfo(id);
+  const lib = getLibrary();
+  const info = !!lib.films[ id ] ? lib.films[ id ] : lib.shows[ id ];
   if (!info) res.status(404).send('Media not found');
   else res.status(200).send({ data: { id: id, ...info } });
 });
