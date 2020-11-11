@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './FilmDetailsPage.css';
 import { useParams } from 'react-router-dom';
-import FAC from 'fast-average-color';
 import AppButton from '../../components/AppButton/AppButton';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import FilmDetailsPlayer from './FilmDetailsPlayer';
 import { useMediaDetails } from '../../utils/comms';
-import { formatTime } from '../../utils/functions';
+import { formatTime, getBackdropColour } from '../../utils/functions';
+import { IFilmInfo } from '../../utils/interfaces';
 
 const MediaDetailsPage = () => {
   const id = (useParams() as any).media_id;
-  const media = useMediaDetails(id);
+  const media = useMediaDetails<IFilmInfo>(id);
   const [ backColour, setBackColour ] = useState<[ string, boolean ]>();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const MediaDetailsPage = () => {
 
   return !media ? <LoadingSpinner /> : (
     <React.Fragment>
-      <div className="media-details-container" style={ {
+      <div className="film-details-container" style={ {
         backgroundColor: !backColour ? 'transparent' : backColour[ 0 ],
         color: !backColour ? 'var(--colour-text)' : backColour[ 1 ] ? 'white' : '#2c2c2e'
       } }>
@@ -36,11 +36,6 @@ const MediaDetailsPage = () => {
       <FilmDetailsPlayer { ...media } />
     </React.Fragment>
   );
-};
-
-const getBackdropColour = async (url: string): Promise<[ string, boolean ]> => {
-  const c = (await new FAC().getColorAsync(url));
-  return [ c.hex, c.isDark ];
 };
 
 export default MediaDetailsPage;

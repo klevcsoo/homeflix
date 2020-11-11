@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IFilmInfo, ILibrary } from './interfaces';
+import { IFilmInfo, ILibrary, IShowInfo } from './interfaces';
 
 const serverUrl = `http://${ window.location.hostname }:7800`;
 
@@ -10,10 +10,10 @@ export async function getLibrary() {
   }).then((j) => j.data) as ILibrary;
 }
 
-export async function getMediaInfo(id: string) {
+export async function getMediaInfo<MediaType = IFilmInfo | IShowInfo>(id: string) {
   return await fetch(`${ serverUrl }/media/${ id }/info`).then((res) => {
     return res.json();
-  }).then((j) => j.data) as IFilmInfo;
+  }).then((j) => j.data) as MediaType;
 }
 
 export async function syncLibrary() {
@@ -32,8 +32,13 @@ export async function addMediaToCollection(cid: string, mid: string) {
   });
 }
 
-export async function updateProgressOnMedia(mid: string, progress: number) {
+export async function updateProgressOnFilm(mid: string, progress: number) {
   await fetch(`${ serverUrl }/media/${ mid }?progress=${ progress }`, {
+    method: 'POST'
+  });
+}
+export async function updateProgressOnShow(mid: string, s: number, e: number, progress: number) {
+  await fetch(`${ serverUrl }/media/${ mid }/${ s }/${ e }?progress=${ progress }`, {
     method: 'POST'
   });
 }
@@ -46,9 +51,9 @@ export function useLibrary() {
   return lib;
 }
 
-export function useMediaDetails(id: string) {
-  const [ media, setMedia ] = useState<IFilmInfo>();
-  useEffect(() => { getMediaInfo(id).then(setMedia); }, [ id ]);
+export function useMediaDetails<MediaType = IFilmInfo | IShowInfo>(id: string) {
+  const [ media, setMedia ] = useState<MediaType>();
+  useEffect(() => { getMediaInfo<MediaType>(id).then(setMedia); }, [ id ]);
   return media;
 }
 // ---------- HOOKS ----------

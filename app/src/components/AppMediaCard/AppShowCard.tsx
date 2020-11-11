@@ -3,6 +3,7 @@ import './AppMediaCard.css';
 import { IShowInfo } from '../../utils/interfaces';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../utils/constants';
+import { getShowActiveEpisode, getShowProgress } from '../../utils/functions';
 
 const AppShowCard = (props: IShowInfo & {
   grayOutWatched?: boolean;
@@ -10,9 +11,7 @@ const AppShowCard = (props: IShowInfo & {
 }) => {
   const history = useHistory();
 
-  const ae = getActiveEpisode(props.seasons.map((s) => s.map((e) => {
-    return e.progress === 0 ? 'none' : e.progress === e.duration ? 'watched' : 'active';
-  }))); // Active episode
+  const ae = getShowActiveEpisode(getShowProgress(props.seasons)); // Active episode
   const ws = ae === [ props.seasons.length, props.seasons.reverse()[ 0 ].length ]; // Watched show
 
   return (
@@ -39,31 +38,6 @@ const AppShowCard = (props: IShowInfo & {
       })() }
     </div>
   );
-};
-
-type EpisodeProgress = 'none' | 'active' | 'watched';
-
-const getActiveEpisode = (seasons: EpisodeProgress[][]): [ number, number ] => {
-  const activeEpisodeinSeasons: [ number, number | null ][] = [];
-
-  for (let si in seasons) {
-    if (seasons[ si ].every((e) => e === 'none')) { // Hasn't begun watching the season
-      activeEpisodeinSeasons.push([ parseInt(si) + 1, 1 ]);
-      continue;
-    } else if (seasons[ si ].every((e) => e === 'watched')) { // Watched the entire season
-      activeEpisodeinSeasons.push([ parseInt(si) + 1, null ]);
-      continue;
-    } else { // In the middle of watching the season
-      const aei = Math.abs(seasons[ si ].reverse().findIndex((e) => e === 'active') - (seasons[ si ].length - 1));
-      if (aei === -1) { // In the middle of the season, but not in the middle of an episode
-        activeEpisodeinSeasons.push([ parseInt(si) + 1, seasons[ si ].findIndex((e) => e === 'none') + 1 ]);
-      } else { // In the middle of the season, as well as an episode in that season
-        activeEpisodeinSeasons.push([ parseInt(si) + 1, aei + 1 ]);
-      }
-    }
-  }
-
-  return activeEpisodeinSeasons.reverse().find(([ _, e ]) => !!e) as [ number, number ];
 };
 
 export default AppShowCard;
