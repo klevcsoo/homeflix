@@ -71,7 +71,7 @@ app.post('/media/:media_id', (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/media/:media_id/:season:/:episode', (req, res) => {
+app.post('/media/:media_id/:season/:episode', (req, res) => {
   printRequestInfo(req);
   const id = req.params.media_id;
   const s = parseInt(req.params.season);

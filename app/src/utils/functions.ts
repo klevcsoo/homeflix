@@ -33,11 +33,11 @@ export function getShowActiveEpisode(seasons: EpisodeProgress[][]): [ number, nu
       activeEpisodeinSeasons.push([ parseInt(si) + 1, null ]);
       continue;
     } else { // In the middle of watching the season
-      const aei = Math.abs(seasons[ si ].reverse().findIndex((e) => e === 'active') - (seasons[ si ].length - 1));
+      const aei = seasons[ si ].reverse().findIndex((e) => e === 'active');
       if (aei === -1) { // In the middle of the season, but not in the middle of an episode
         activeEpisodeinSeasons.push([ parseInt(si) + 1, seasons[ si ].findIndex((e) => e === 'none') + 1 ]);
       } else { // In the middle of the season, as well as an episode in that season
-        activeEpisodeinSeasons.push([ parseInt(si) + 1, aei + 1 ]);
+        activeEpisodeinSeasons.push([ parseInt(si) + 1, Math.abs(aei - (seasons[ si ].length - 1)) + 1 ]);
       }
     }
   }

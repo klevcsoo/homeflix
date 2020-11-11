@@ -10,6 +10,7 @@ const ShowDetailsPlayer = (props: {
 }) => {
   const progress = useRef(props.progress);
   const setProgress = useCallback(() => {
+    if (!progress.current) return;
     updateProgressOnShow(props.id, props.season, props.episode, progress.current);
   }, [ progress, props ]);
 
