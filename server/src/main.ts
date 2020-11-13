@@ -103,6 +103,19 @@ app.get('/media/:media_id/info', (req, res) => {
   else res.status(200).send({ data: { id: id, ...info } });
 });
 
+// Remove media from library
+app.post('/media/:media_id/remove', (req, res) => {
+  printRequestInfo(req);
+  const id = req.params.media_id as string;
+  setLibrary((lib) => {
+    if (!!lib.films[ id ]) delete lib.films[ id ];
+    else if (!!lib.shows[ id ]) delete lib.shows[ id ];
+    else res.status(404).send('Media not found');
+    return lib;
+  });
+  res.sendStatus(200);
+});
+
 // Get all collections
 app.get('/collections', (req, res) => {
   printRequestInfo(req);

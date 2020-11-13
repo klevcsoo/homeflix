@@ -42,6 +42,12 @@ export async function updateProgressOnShow(mid: string, s: number, e: number, pr
     method: 'POST'
   });
 }
+
+export async function removeMediaFromLibrary(mid: string) {
+  await fetch(`${ serverUrl }/media/${ mid }/remove`, {
+    method: 'POST'
+  });
+}
 // ---------- CALLABLES ----------
 
 // ---------- HOOKS ----------
