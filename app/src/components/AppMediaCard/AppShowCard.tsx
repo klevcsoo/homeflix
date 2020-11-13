@@ -19,14 +19,14 @@ const AppShowCard = (props: IShowInfo & {
       onClick={ () => {
         setTimeout(() => history.push(routes.SHOW_DETAILS.replace(':media_id', props.id)), 200);
       } }>
-      {!props.progressLabel ? null : (
-        <div><p>S{ ae[ 0 ] < 10 ? `0${ ae[ 0 ] }` : ae[ 0 ] } E{ ae[ 1 ] < 10 ? `0${ ae[ 1 ] }` : ae[ 1 ] }</p></div>
-      ) }
       {/* Add fallback image to img element with the onError attribute*/ }
       <img src={ props.metadata.poster } alt="" />
       <h2>
-        { props.title }<br />
-        { ws ? <span>Watched</span> : null }
+        { props.title }
+        { ws ? <span><br />Watched</span> : null }
+        { props.progressLabel ? <span>
+          <br />S{ ae[ 0 ] < 10 ? `0${ ae[ 0 ] }` : ae[ 0 ] } E{ ae[ 1 ] < 10 ? `0${ ae[ 1 ] }` : ae[ 1 ] }
+        </span> : null }
       </h2>
       {(() => {
         const info = props.seasons[ ae[ 0 ] - 1 ][ ae[ 1 ] - 1 ];

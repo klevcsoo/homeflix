@@ -5,22 +5,32 @@ import { useLibrary } from '../../utils/comms';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { ILibrary } from '../../utils/interfaces';
 import AppShowCard from '../../components/AppMediaCard/AppShowCard';
+import { getShowActiveEpisode, getShowProgress } from '../../utils/functions';
 
 const LibraryPage = () => {
   const lib = useLibrary();
-  const continueWatching = !lib ? null : Object.keys(lib.films).filter((id) => {
+  const continueWatchingFilms = !lib ? null : Object.keys(lib.films).filter((id) => {
     const m = lib.films[ id ];
     return !!m.progress && m.progress !== m.duration ? id : null;
+  });
+  const continueWatchingShows = !lib ? null : Object.keys(lib.shows).filter((id) => {
+    const show = lib.shows[ id ];
+    const aei = getShowActiveEpisode(getShowProgress(show.seasons));
+    const ae = show.seasons[ aei[ 0 ] - 1 ][ aei[ 1 ] - 1 ];
+    return !!ae.progress && ae.progress !== ae.duration ? id : null;
   });
 
   return !lib ? <LoadingSpinner /> : (
     <div>
-      {continueWatching?.length === 0 ? null : (
+      {!continueWatchingFilms && !continueWatchingShows ? null : (
         <React.Fragment>
           <h2 className="library-label">Continue watching</h2>
           <div className="library-continue-watching">
-            { continueWatching?.map((id, ix) => (
+            { continueWatchingFilms?.map((id, ix) => (
               <AppFilmCard { ...lib.films[ id ] } id={ id } key={ ix } />
+            )) }
+            { continueWatchingShows?.map((id, ix) => (
+              <AppShowCard { ...lib.shows[ id ] } id={ id } key={ ix } progressLabel />
             )) }
           </div>
         </React.Fragment>

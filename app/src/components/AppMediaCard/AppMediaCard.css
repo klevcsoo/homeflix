@@ -21,6 +21,7 @@
   object-fit: cover;
   object-position: center;
 
+  border-radius: var(--value-border-radius);
   filter: blur(0) saturate(100%);
 }
 .app-media-card:hover > img {
