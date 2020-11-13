@@ -7,7 +7,7 @@
     "server": "lib/main.js"
   },
   "scripts": {
-    "start": "tsc && NODE_ENV=development node .",
+    "start": "tsc && clear && NODE_ENV=development node .",
     "build": "tsc"
   },
   "keywords": [],
