@@ -20,7 +20,7 @@ echo "Creating executable file..."
 touch dist/serve.sh && echo "NODE_ENV=production node src/main.js" > dist/serve.sh
 
 echo "Deploying to server..."
-ssh pi@192.168.0.32 "rm -r ~/homeflix/src && mkdir ~/homeflix/src"
-scp -rp dist/* pi@192.168.0.32:~/homeflix/src/
-ssh pi@192.168.0.32 "mv ~/homeflix/src/serve.sh ~/homeflix"
+ssh pi@192.168.0.34 "rm -r ~/homeflix/src && mkdir ~/homeflix/src"
+scp -rp dist/* pi@192.168.0.34:~/homeflix/src/
+ssh pi@192.168.0.34 "mv ~/homeflix/src/serve.sh ~/homeflix"
 echo "Done"
