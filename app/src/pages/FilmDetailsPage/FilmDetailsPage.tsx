@@ -8,6 +8,7 @@ import { removeMediaFromLibrary, useMediaDetails } from '../../utils/comms';
 import { formatTime, getBackdropColour } from '../../utils/functions';
 import { IFilmInfo } from '../../utils/interfaces';
 import { routes } from '../../utils/constants';
+import FilmDetailsSubtitleUpload from './FilmDetailsSubtitleUpload';
 
 const MediaDetailsPage = () => {
   const id = (useParams() as any).media_id;
@@ -41,7 +42,8 @@ const MediaDetailsPage = () => {
         <p><b>Release date: </b> { new Date(media.metadata.releaseDate).toLocaleDateString() }</p>
         <span style={ { height: 20 } }></span>
         <div>
-        <AppButton type="secondary" text="Add to collection" onClick={ () => { } } />
+          <AppButton type="secondary" text="Add to collection" onClick={ () => { } } />
+          <FilmDetailsSubtitleUpload id={ id } />
           <AppButton type="warning" text={ removeConfirm ? 'Are you sure?' : 'Remove from library' }
             onClick={ () => {
               if (removeConfirm) removeMediaFromLibrary(id).then(() => {

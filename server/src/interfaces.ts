@@ -40,6 +40,7 @@ export interface ILibrary {
 
 export interface IServerConfig {
   mediaDirPath: string;
+  subtitlesDirPath: string;
   publicDirPath: string;
   databasePath: string;
   port: number;

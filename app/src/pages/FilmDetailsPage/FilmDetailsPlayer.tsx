@@ -20,7 +20,10 @@ const MediaDetailsPlayer = (props: IFilmInfo) => {
     } } onPause={ () => setProgress() } poster={ props.metadata.backdrop }
       // @ts-ignore
       preload="none" controlsList="nodownload" type="video/mp4"
-      src={ `http://${ window.location.hostname }:7800/media/${ props.id }` }>
+      src={ `http://${ window.location.hostname }:7800/media/${ props.id }` }
+      crossOrigin="anonymus">
+      <track label="English" kind="subtitles" srcLang="en"
+        src={ `http://${ window.location.hostname }:7800/subtitles/${ props.id }.vtt` } />
     </video>
   );
 };

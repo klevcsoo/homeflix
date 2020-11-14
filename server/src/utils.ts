@@ -1,5 +1,7 @@
 import { Request } from 'express';
 import fs from 'fs';
+import path from 'path';
+import { Readable } from 'stream';
 import { serverConfig } from './constants';
 import { ILibrary } from './interfaces';
 
@@ -46,4 +48,16 @@ export function getLibrary() {
 export function setLibrary(updater: (lib: ILibrary) => ILibrary) {
   const newLib = updater(getLibrary());
   fs.writeFileSync(serverConfig.databasePath, JSON.stringify(newLib));
+}
+
+/**
+ * Adds a subtitle to a given film
+ * @param mid media ID
+ * @param content subtitle file
+ */
+export function addSubtitlestoFilm(mid: string, content: string) {
+  const r = Readable.from(content.toString());
+  const vtt: Readable = r.pipe(require('srt-to-vtt')());
+  const w = fs.createWriteStream(path.resolve(serverConfig.subtitlesDirPath, `${ mid }.vtt`));
+  vtt.pipe(w);
 }

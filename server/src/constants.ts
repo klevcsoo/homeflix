@@ -7,6 +7,7 @@ const configPath = path.resolve('../server-config.json');
 
 const DEF_PUBLIC_DIR = isDevEnv ? path.resolve(__dirname, '../../app/build') : path.resolve(__dirname, './public');
 const DEF_MEDIA_DIR = isDevEnv ? '/mnt/d/Homeflix' : '/mnt/homeflix-storage1/media';
+const DEF_SUBTITLES_DIR = isDevEnv ? '/mnt/d/Homeflix/Subs' : '/mnt/homeflix-storage1/subs';
 const DEF_DATABASE_PATH = path.resolve(__dirname, '../index.json');
 
 export const serverConfig: IServerConfig = fs.existsSync(configPath) ?
@@ -14,6 +15,7 @@ export const serverConfig: IServerConfig = fs.existsSync(configPath) ?
   {
     databasePath: DEF_DATABASE_PATH,
     mediaDirPath: DEF_MEDIA_DIR,
+    subtitlesDirPath: DEF_SUBTITLES_DIR,
     publicDirPath: DEF_PUBLIC_DIR,
     port: 7800
   };

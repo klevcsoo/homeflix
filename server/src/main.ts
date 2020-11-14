@@ -4,15 +4,16 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { address as getLocalIP } from 'ip';
 import { serverConfig } from './constants';
-import { generateCollectionID, getLibrary, printRequestInfo, setLibrary } from './utils';
+import { addSubtitlestoFilm, generateCollectionID, getLibrary, printRequestInfo, setLibrary } from './utils';
 import synchroniseMediaDir, { addFilmToLibrary, getMediaFiles } from './sync-media';
 
 const app = express();
 const httpServer = createServer(app);
 
 app.use(cors());
-app.use(requestJSON());
+app.use(requestJSON({ limit: '2mb' }));
 app.use(express.static(serverConfig.publicDirPath));
+app.use('/subtitles', express.static(serverConfig.subtitlesDirPath));
 
 // Get full library
 app.get('/media', (req, res) => {
@@ -113,6 +114,14 @@ app.post('/media/:media_id/remove', (req, res) => {
     else res.status(404).send('Media not found');
     return lib;
   });
+  res.sendStatus(200);
+});
+
+// Add subtitles to film
+app.post('/media/:media_id/subtitles', (req, res) => {
+  printRequestInfo(req);
+  const id = req.params.media_id as string;
+  addSubtitlestoFilm(id, req.body.file);
   res.sendStatus(200);
 });
 

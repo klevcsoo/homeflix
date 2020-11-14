@@ -48,6 +48,16 @@ export async function removeMediaFromLibrary(mid: string) {
     method: 'POST'
   });
 }
+
+export async function addSubtitlesToFilm(mid: string, file: Buffer) {
+  await fetch(`${ serverUrl }/media/${ mid }/subtitles`, {
+    method: 'POST',
+    headers: [ [ 'Content-type', 'application/json; charset=utf-8' ] ],
+    body: JSON.stringify({
+      file: file.toString()
+    })
+  });
+}
 // ---------- CALLABLES ----------
 
 // ---------- HOOKS ----------

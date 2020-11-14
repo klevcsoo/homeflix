@@ -26,6 +26,7 @@
     "jsdom": "^16.4.0",
     "movie-info": "^2.0.5",
     "socket.io": "^2.3.0",
+    "srt-to-vtt": "^1.1.3",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {}
