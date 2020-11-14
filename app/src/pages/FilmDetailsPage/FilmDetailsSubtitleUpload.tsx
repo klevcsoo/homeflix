@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppButton from '../../components/AppButton/AppButton';
 import { addSubtitlesToFilm } from '../../utils/comms';
 
 const FilmDetailsSubtitleUpload = (props: {
   id: string;
 }) => {
+  const [ uploaded, setUploaded ] = useState(false);
+
   const upload = () => {
     const input = document.createElement('input');
     input.type = 'file'; input.accept = '.srt';
@@ -14,6 +16,7 @@ const FilmDetailsSubtitleUpload = (props: {
       const file = this.files[ 0 ] as File;
       file.arrayBuffer().then((buffer) => {
         addSubtitlesToFilm(props.id, Buffer.from(buffer));
+        setUploaded(true);
       });
     }
 
@@ -24,7 +27,7 @@ const FilmDetailsSubtitleUpload = (props: {
   };
 
   return (
-    <AppButton type="secondary" text="Upload subtitles" onClick={ upload } />
+    <AppButton type="secondary" text={ uploaded ? 'Subtitles uploaded' : 'Upload subtitles' } onClick={ upload } />
   );
 };
 
