@@ -12,7 +12,6 @@ const FilmDetailsSubtitleUpload = (props: {
 
     function onFile(this: any) {
       const file = this.files[ 0 ] as File;
-      console.log(file);
       file.arrayBuffer().then((buffer) => {
         addSubtitlesToFilm(props.id, Buffer.from(buffer));
       });
