@@ -22,6 +22,7 @@ export interface IShowInfo {
   id: string;
   title: string;
   metadata: ITitleMetadata;
+  nextUp: [ number, number ];
   seasons: {
     playablePath: string;
     progress: number;

@@ -5,7 +5,6 @@ import { useLibrary } from '../../utils/comms';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { ILibrary } from '../../utils/interfaces';
 import AppShowCard from '../../components/AppMediaCard/AppShowCard';
-import { getShowActiveEpisode, getShowProgress } from '../../utils/functions';
 
 const LibraryPage = () => {
   const lib = useLibrary();
@@ -15,8 +14,7 @@ const LibraryPage = () => {
   });
   const continueWatchingShows = !lib ? null : Object.keys(lib.shows).filter((id) => {
     const show = lib.shows[ id ];
-    const aei = getShowActiveEpisode(getShowProgress(show.seasons));
-    const ae = show.seasons[ aei[ 0 ] - 1 ][ aei[ 1 ] - 1 ];
+    const ae = show.seasons[ show.nextUp[ 0 ] ][ show.nextUp[ 1 ] ];
     return !!ae.progress && ae.progress !== ae.duration ? id : null;
   });
 
