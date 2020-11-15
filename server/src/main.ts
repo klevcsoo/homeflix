@@ -72,6 +72,7 @@ app.post('/media/:media_id', (req, res) => {
   res.sendStatus(200);
 });
 
+// Update the progress on specific show
 app.post('/media/:media_id/:season/:episode', (req, res) => {
   printRequestInfo(req);
   const id = req.params.media_id;
@@ -83,12 +84,27 @@ app.post('/media/:media_id/:season/:episode', (req, res) => {
   if (!getLibrary().shows[ id ]) { res.status(404).send('Media not found'); return; }
   if (!p && p !== 0) { res.status(406).send('Progress format incorrect'); return; }
 
-  const margin = 10; // percent
   setLibrary((lib) => {
-    const ep = lib.shows[ id ].seasons[ s - 1 ][ e - 1 ];
-    if (p < ep.duration * (margin / 100)) ep.progress = 0;
-    else if (p > ep.duration * ((100 - margin) / 100)) ep.progress = ep.duration;
-    else ep.progress = p;
+    const si = s - 1, ei = e - 1;
+    const show = lib.shows[ id ];
+    const season = show.seasons[ si ];
+    const episode = season[ ei ];
+
+    if (p < episode.duration * 0.05) { // The progress is below 5%
+      episode.progress = 0; show.nextUp = [ si, ei ];
+    } else if (p > episode.duration * 0.9) { // The progress is above 90%
+      episode.progress = episode.duration;
+      if (!!season[ ei + 1 ]) { // This is another episode
+        show.nextUp = [ si, ei + 1 ];
+      } else { // This is the end of the season
+        if (!!show.seasons[ si + 1 ]) { // There is another season
+          show.nextUp = [ s + 1, 0 ];
+        } else { // There are no more seasons
+          show.nextUp = [ 0, 0 ];
+        }
+      }
+    }
+
     return lib;
   });
   res.sendStatus(200);

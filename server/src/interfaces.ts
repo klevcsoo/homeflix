@@ -20,6 +20,7 @@ export interface IFilmInfo {
 export interface IShowInfo {
   title: string;
   metadata: ITitleMetadata;
+  nextUp: [ number, number ];
   seasons: {
     playablePath: string;
     progress: number;
