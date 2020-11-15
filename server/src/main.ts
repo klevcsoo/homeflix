@@ -43,11 +43,11 @@ app.get('/media/:media_id/:season/:episode', (req, res) => {
   printRequestInfo(req);
   const s = parseInt(req.params.season);
   const e = parseInt(req.params.episode);
-  if (!s || !e) res.status(406).send('Invalid season or episode format');
+  if ((!s && s !== 0) || (!e && e !== 0)) res.status(406).send('Invalid season or episode format');
   else {
     const info = getLibrary().shows[ req.params.media_id as string ];
     if (!info) res.status(404).send('Media not found');
-    else res.status(200).sendFile(info.seasons[ s - 1 ][ e - 1 ].playablePath);
+    else res.status(200).sendFile(info.seasons[ s ][ e ].playablePath);
   }
 
 });
@@ -78,26 +78,25 @@ app.post('/media/:media_id/:season/:episode', (req, res) => {
   const id = req.params.media_id;
   const s = parseInt(req.params.season);
   const e = parseInt(req.params.episode);
-  if (!s || !e) { res.status(406).send('Invalid season or episode format'); return; }
+  if ((!s && s !== 0) || (!e && e !== 0)) { res.status(406).send('Invalid season or episode format'); return; }
 
   const p = parseInt(req.query.progress as string);
   if (!getLibrary().shows[ id ]) { res.status(404).send('Media not found'); return; }
   if (!p && p !== 0) { res.status(406).send('Progress format incorrect'); return; }
 
   setLibrary((lib) => {
-    const si = s - 1, ei = e - 1;
     const show = lib.shows[ id ];
-    const season = show.seasons[ si ];
-    const episode = season[ ei ];
+    const season = show.seasons[ s ];
+    const episode = season[ e ];
 
     if (p < episode.duration * 0.05) { // The progress is below 5%
-      episode.progress = 0; show.nextUp = [ si, ei ];
+      episode.progress = 0; show.nextUp = [ s, e ];
     } else if (p > episode.duration * 0.9) { // The progress is above 90%
       episode.progress = episode.duration;
-      if (!!season[ ei + 1 ]) { // This is another episode
-        show.nextUp = [ si, ei + 1 ];
+      if (!!season[ e + 1 ]) { // This is another episode
+        show.nextUp = [ s, e + 1 ];
       } else { // This is the end of the season
-        if (!!show.seasons[ si + 1 ]) { // There is another season
+        if (!!show.seasons[ s + 1 ]) { // There is another season
           show.nextUp = [ s + 1, 0 ];
         } else { // There are no more seasons
           show.nextUp = [ 0, 0 ];
