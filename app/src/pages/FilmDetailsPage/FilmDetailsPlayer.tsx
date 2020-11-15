@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import './FilmDetailsPage.scss';
 import { updateProgressOnFilm } from '../../utils/comms';
 import { IFilmInfo } from '../../utils/interfaces';
 

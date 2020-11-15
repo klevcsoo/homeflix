@@ -1,4 +1,5 @@
 import React from 'react';
+import './CollectionsPage.scss';
 import AppFilmCard from '../../components/AppMediaCard/AppFilmCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useLibrary } from '../../utils/comms';

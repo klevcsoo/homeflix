@@ -1,5 +1,5 @@
 import React from 'react';
-import './AppMediaCard.css';
+import './AppMediaCard.scss';
 import { IShowInfo } from '../../utils/interfaces';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../utils/constants';

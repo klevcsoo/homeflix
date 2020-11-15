@@ -1,0 +1,123 @@
+.show-details-container {
+  width: calc(100vw - 40px); max-width: 1200px;
+  margin: 20px auto; overflow: hidden;
+
+  display: grid; place-content: center;
+  grid-template: 1fr / 1fr;
+
+  border-radius: var(--value-border-radius);
+
+  > div {
+    &:nth-of-type(1) {
+      grid-row: 1; grid-column: 1;
+      width: 100%; height: auto;
+      
+      border-radius: var(--value-border-radius);
+      background-position: center;
+      background-size: cover;
+      
+      filter: blur(50px) brightness(120%);
+    }
+    &:nth-of-type(2) {
+      grid-row: 1; grid-column: 1; z-index: 1;
+      padding: 20px;
+      display: grid; column-gap: 20px;
+      grid-template: repeat(2, min-content) 20px repeat(3, min-content) auto / 250px auto;
+    }
+
+    > img {
+      grid-row: 1 / -1;
+      width: 100%; height: inherit;
+      border-radius: var(--value-border-radius);
+    }
+
+    > h1 {
+      text-align: start; margin: 0 0 20px 0;
+    }
+
+    > p {
+      text-align: start; margin: 0;
+    }
+
+    > .app-button {
+      margin-left: 0 !important;
+    }
+  }
+}
+
+.show-details-episode-roster {
+  width: calc(100vw - 40px); max-width: 1200px;
+  margin: 10px auto;
+
+  display: grid; place-items: center; column-gap: 10px;
+  grid-template-rows: 60px;
+  grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr));
+
+  > div {
+    grid-row: 1;
+    width: 100%; height: 100%; overflow: hidden;
+  
+    display: grid; place-items: center;
+    grid-template-rows: 50px 10px;
+  
+    background: var(--colour-fg);
+    border-radius: var(--value-border-radius);
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px);
+      filter: brightness(80%);
+    }
+
+    &.open {
+      background: var(--colour-bg);
+      
+      h2 {
+        font-weight: 400;
+      }
+    }
+
+    > h2 {
+      font-weight: 300; font-size: 26px;
+      margin: 0;
+    }
+
+    > div {
+      width: 100%; height: 10px;
+      display: grid;
+      backdrop-filter: brightness(50%);
+
+      > div {
+        height: inherit;
+        background: var(--colour-primary);
+      }
+    }
+  }
+}
+
+video.show-details-player {
+  width: calc(100vw - 40px); max-width: 1200px;
+  margin: 20px auto; display: block;
+  border-radius: var(--value-border-radius)
+}
+
+@media(max-width: 700px) {
+  .show-details-container {
+    grid-template: auto / 1fr;
+
+    > div .app-button {
+      margin-left: auto !important;
+    }
+  }
+}
+
+@media(prefers-color-scheme: dark) {
+  .show-details-container > div {
+    &:nth-of-type(1) {
+      filter: blur(50px) brightness(80%);
+    }
+    &:hover {
+      filter: brightness(150%);
+    }
+  }
+}

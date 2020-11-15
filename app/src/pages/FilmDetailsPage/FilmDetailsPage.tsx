@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './FilmDetailsPage.css';
+import './FilmDetailsPage.scss';
 import { useHistory, useParams } from 'react-router-dom';
 import AppButton from '../../components/AppButton/AppButton';
 import LoadingSpinner from '../../components/LoadingSpinner';

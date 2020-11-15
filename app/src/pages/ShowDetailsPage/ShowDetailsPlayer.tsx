@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import './ShowDetailsPage.scss';
 import { updateProgressOnShow } from '../../utils/comms';
 
 const ShowDetailsPlayer = (props: {

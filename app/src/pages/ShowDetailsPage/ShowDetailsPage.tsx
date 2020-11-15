@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ShowDetailsPage.css';
+import './ShowDetailsPage.scss';
 import { useParams } from 'react-router-dom';
 import { useMediaDetails } from '../../utils/comms';
 import { getShowActiveEpisode, getShowProgress } from '../../utils/functions';

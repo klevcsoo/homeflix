@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AppNavbar.css';
+import './AppNavbar.scss';
 import { CollectionsRounded, RefreshRounded, SearchRounded, SettingsRounded } from '@material-ui/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 import { routes } from '../../utils/constants';

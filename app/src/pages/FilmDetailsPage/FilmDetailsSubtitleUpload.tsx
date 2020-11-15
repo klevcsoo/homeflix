@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './FilmDetailsPage.scss';
 import AppButton from '../../components/AppButton/AppButton';
 import { addSubtitlesToFilm } from '../../utils/comms';
 

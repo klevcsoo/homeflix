@@ -1,5 +1,5 @@
 import React from 'react';
-import './AppInput.css';
+import './AppInput.scss';
 
 const AppInput = (props: {
   placeholder: string,

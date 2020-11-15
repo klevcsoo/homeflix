@@ -1,5 +1,5 @@
 import React from 'react';
-import './AppButton.css';
+import './AppButton.scss';
 import LoadingSpinner from '../LoadingSpinner';
 
 const AppButton = (props: {

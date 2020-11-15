@@ -13,9 +13,10 @@ h2.library-label {
 
   background: var(--colour-fg);
   border-radius: var(--value-border-radius);
-}
-.library-continue-watching > div {
-  grid-row: 1;
+
+  > div{
+    grid-row: 1;
+  }
 }
 
 .library-all-media {

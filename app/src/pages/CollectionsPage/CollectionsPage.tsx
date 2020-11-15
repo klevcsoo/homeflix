@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CollectionsPage.css';
+import './CollectionsPage.scss';
 import AppButton from '../../components/AppButton/AppButton';
 import AppInput from '../../components/AppInput/AppInput';
 import LoadingSpinner from '../../components/LoadingSpinner';

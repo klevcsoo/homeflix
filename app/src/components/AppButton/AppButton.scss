@@ -1,0 +1,56 @@
+.app-button {
+  width: calc(100% - 20px); max-width: 300px;
+  height: auto; min-height: 50px;
+  margin: 10px auto; padding: 0 15px;
+  overflow: hidden; display: block;
+
+  border: none; border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+  &:active {
+    transform: translateY(0px);
+    transition-duration: 50ms;
+    filter: brightness(80%);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    user-select: none;
+  }
+
+  &.working {
+    pointer-events: none;
+  }
+
+  &.primary {
+    background: var(--colour-primary);
+
+    h2 {
+      color: var(--colour-bg);
+    }
+  }
+
+  &.secondary {
+    background: var(--colour-text);
+    color: var(--colour-text);
+
+    h2 {
+      font-weight: 500;
+      color: var(--colour-bg);
+    }
+  }
+
+  &.warning {
+    background: var(--colour-warn);
+
+    h2 {
+      color: white;
+    }
+  }
+}

@@ -22,9 +22,10 @@
 * {
   box-sizing: border-box;
   transition: 100ms ease-in-out all;
-}
-*:focus {
-  outline: none;
+
+  &:focus {
+    outline: none;
+  }
 }
 ::-webkit-scrollbar {
   width: 0; display: none; visibility: collapse;
