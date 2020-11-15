@@ -3,8 +3,12 @@ import './AppMediaCard.scss';
 import { IFilmInfo } from '../../utils/interfaces';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../utils/constants';
+import { formatTime } from '../../utils/functions';
 
-const AppFilmCard = (props: IFilmInfo & { grayOutWatched?: boolean; }) => {
+const AppFilmCard = (props: IFilmInfo & {
+  grayOutWatched?: boolean;
+  progressIndicator?: boolean;
+}) => {
   const history = useHistory();
 
   return (
@@ -15,11 +19,12 @@ const AppFilmCard = (props: IFilmInfo & { grayOutWatched?: boolean; }) => {
       {/* Add fallback image to img element with the onError attribute*/ }
       <img src={ props.metadata.poster } alt="" />
       <h2>
-        { props.title }<br />
-        { props.progress === props.duration ? <span>Watched</span> : null }
+        { props.title }
+        { props.progress === props.duration ? <span><br />Watched</span> : null }
+        { props.progressIndicator ? <span><br />{ `${ formatTime(props.duration - props.progress) } left` }</span> : null }
       </h2>
-      {!props.progress || props.progress === props.duration ? null : (
-        <div className="acrylic-transparent">
+      {!props.progressIndicator || !props.progress || props.progress === props.duration ? null : (
+        <div>
           <div style={ { width: `${ (props.progress / props.duration) * 100 }%` } }></div>
         </div>
       ) }

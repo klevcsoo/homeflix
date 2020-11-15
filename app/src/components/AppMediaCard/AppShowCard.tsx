@@ -6,7 +6,7 @@ import { routes } from '../../utils/constants';
 
 const AppShowCard = (props: IShowInfo & {
   grayOutWatched?: boolean;
-  progressLabel?: boolean;
+  progressIndicator?: boolean;
 }) => {
   const history = useHistory();
 
@@ -23,14 +23,14 @@ const AppShowCard = (props: IShowInfo & {
       <h2>
         { props.title }
         { ws ? <span><br />Watched</span> : null }
-        { props.progressLabel ? <span>
-          <br />S{ ae[ 0 ] < 10 ? `0${ ae[ 0 ] }` : ae[ 0 ] } E{ ae[ 1 ] < 10 ? `0${ ae[ 1 ] }` : ae[ 1 ] }
+        { props.progressIndicator ? <span>
+          <br />S{ ae[ 0 ] + 1 < 10 ? `0${ ae[ 0 ] + 1 }` : ae[ 0 ] + 1 } E{ ae[ 1 ] + 1 < 10 ? `0${ ae[ 1 ] + 1 }` : ae[ 1 ] + 1 }
         </span> : null }
       </h2>
-      {(() => {
+      {!props.progressIndicator ? null : (() => {
         const info = props.seasons[ ae[ 0 ] ][ ae[ 1 ] ];
         if (!ws && ae !== [ 1, 1 ] && !!info.progress && info.progress !== info.duration) {
-          return <div className="acrylic-transparent">
+          return <div>
             <div style={ { width: `${ (info.progress / info.duration) * 100 }%` } }></div>
           </div>;
         } else return null;

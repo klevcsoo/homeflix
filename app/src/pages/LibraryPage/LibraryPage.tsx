@@ -25,11 +25,12 @@ const LibraryPage = () => {
           <h2 className="library-label">Continue watching</h2>
           <div className="library-continue-watching">
             { continueWatchingFilms?.map((id, ix) => (
-              <AppFilmCard { ...lib.films[ id ] } id={ id } key={ ix } />
+              <AppFilmCard { ...lib.films[ id ] } id={ id } key={ ix } progressIndicator />
             )) }
             { continueWatchingShows?.map((id, ix) => (
-              <AppShowCard { ...lib.shows[ id ] } id={ id } key={ ix } progressLabel />
+              <AppShowCard { ...lib.shows[ id ] } id={ id } key={ ix } progressIndicator />
             )) }
+            <div style={ { width: 1 } }></div>
           </div>
         </React.Fragment>
       ) }
