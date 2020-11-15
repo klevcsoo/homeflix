@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "Building app..."
 cd app && npm run build && cd ..
 cd server && npm run build && cd ..
