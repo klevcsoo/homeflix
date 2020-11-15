@@ -9,7 +9,7 @@ h2.library-label {
   overflow-x: scroll;
 
   display: grid; column-gap: 20px;
-  grid-template: 1fr / min-content;
+  grid-template: 1fr / auto;
 
   background: var(--colour-fg);
   border-radius: var(--value-border-radius);
