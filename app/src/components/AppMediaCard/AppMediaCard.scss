@@ -1,6 +1,6 @@
 .app-media-card {
   $width: 250px;
-  width: $width; height: calc($width * 1.5);
+  width: $width; height: calc(#{$width} * 1.5);
 
   display: grid; place-items: center;
   grid-template: 1fr min-content / 1fr;
