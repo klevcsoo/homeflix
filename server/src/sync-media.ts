@@ -163,6 +163,7 @@ async function addShowToLibrary(mediaPaths: string[], mediaName: string) {
     lib.shows[ generateMediaID() ] = {
       title: mediaName,
       metadata: metadata,
+      nextUp: [ 0, 0 ],
       seasons: [ mediaPaths.map((p) => {
         return {
           playablePath: p,
