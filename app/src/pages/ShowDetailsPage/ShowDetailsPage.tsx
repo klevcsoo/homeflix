@@ -35,7 +35,7 @@ const ShowDetailsPage = () => {
           <div className={ si === active[ 0 ] ? 'open' : '' } key={ si } onClick={ () => {
             setActive([ si, 1 ]);
           } }>
-            <h2>Season { si }</h2>
+            <h2>Season { si + 1 }</h2>
             <div><div style={ {
               width: `${ (getSeasonProgress(s)[ 0 ] / getSeasonProgress(s)[ 1 ]) * 100 }%`
             } }></div></div>
@@ -47,7 +47,7 @@ const ShowDetailsPage = () => {
           <div className={ ei === active[ 1 ] ? 'open' : '' } key={ ei } onClick={ () => {
             setActive([ active[ 0 ], ei ]);
           } }>
-            <h2>Episode { ei }</h2>
+            <h2>Episode { ei + 1 }</h2>
             <div><div style={ {
               width: `${ (media.seasons[ active[ 0 ] ][ ei ].progress / media.seasons[ active[ 0 ] ][ ei ].duration) * 100 }%`
             } }></div></div>
