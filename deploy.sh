@@ -2,27 +2,36 @@
 
 set -e
 
-echo "Building app..."
+C="\033[1;33m"
+NC="\033[0m"
+
+echo "${C}Building app...${NC}"
 cd app && npm run build && cd ..
 cd server && npm run build && cd ..
 
-echo "Clearing dist directory..."
-if [ -d "dist/" ]; then rm -r dist/
-fi
+echo "${C}Clearing dist directory...${NC}"
+[ -d "dist/" ] && rm -r dist/
 mkdir dist && mkdir dist/public
 
-echo "Copying front-end..."
-rsync -r --progress app/build/* dist/public/
+echo "${C}Copying front-end...${NC}"
+rsync -rq app/build/* dist/public/
 
-echo "Copying back-end..."
-rsync -r --progress server/lib/* dist/
-rsync -r --progress server/node_modules dist/
+echo "${C}Copying back-end...${NC}"
+rsync -rq server/lib/* dist/
+rsync -rq server/node_modules dist/
 
-echo "Creating executable file..."
-touch dist/serve.sh && echo "NODE_ENV=production node src/main.js" > dist/serve.sh
+echo "${C}Creating app bundle...${NC}"
+zip -rqq dist.zip dist
 
-echo "Deploying to server..."
-ssh pi@192.168.0.34 "rm -r ~/homeflix/src && mkdir ~/homeflix/src"
-scp -rp dist/* pi@192.168.0.34:~/homeflix/src/
-ssh pi@192.168.0.34 "mv ~/homeflix/src/serve.sh ~/homeflix"
-echo "Done"
+echo "${C}Deploying to server...${NC}"
+scp -rp dist.zip pi@192.168.0.34:~/homeflix/
+scp -rp install.sh pi@192.168.0.34:~/homeflix/
+
+echo "${C}Installing app...${NC}"
+ssh pi@192.168.0.34 "bash ~/homeflix/install.sh"
+
+echo "${C}Cleaning up install files on dev client...${NC}"
+rm -r dist
+rm dist.zip
+
+echo "${C}Done${NC}"
